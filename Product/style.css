@@ -1,0 +1,46 @@
+.white-color{
+    color:white;
+}
+
+  #left_budget {
+    text-align: center;
+    font-size: 36px;
+    font-weight: 100px;
+    margin-bottom: 10%;
+  }
+
+  #budget_id {
+    text-align: center;
+    font-size: 24px;
+    color: grey;
+    margin:5%;
+  }
+*{
+    font-family: 'Lato', sans-serif;
+    font-weight: 400px;
+}
+h1{
+    font-family: 'Lato',sans-serif;
+}
+a{
+  color: rgb(194, 80, 99);
+}
+a:hover{
+  color:rgb(218, 167, 0);
+}
+
+.btn-danger{
+  background-color: rgb(194, 80, 99);
+}
+.btn-danger:hover{
+  background-color:rgb(218, 167, 0);
+}
+.btn-secondary{
+  background-color:rgb(218, 167, 0);
+}
+.btn-secondary:hover{
+  background-color:rgb(194, 80, 99);
+}
+.th{
+  font-size: 30px;
+}

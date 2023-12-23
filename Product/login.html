@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>Login</title>
+  <link rel="icon" type="image/x-icon" href="favicon.png">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@350&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+
+
+  <div class="container" style="padding-right:20%;padding-left:20%;padding-top:10%;">
+    <h1 style="text-align:center;padding-bottom:5%">Welcome!</h1>
+    <h6 style="color:red; text-align:center; font-style: italic;" id="errorHeader"></h6>
+    <!-- Pills navs -->
+    <ul class="nav nav-pills nav-justified mb-3" id="ex1" role="tablist">
+      <li class="nav-item" role="presentation">
+        <a class="nav-link active" id="tab-login" data-mdb-toggle="pill" href="#pills-login" role="tab"
+          aria-controls="pills-login" aria-selected="true" style="background-color:blueviolet">Login</a>
+      </li>
+      <li class="nav-item" role="presentation">
+        <a class="nav-link" id="tab-register" data-mdb-toggle="pill" href="register.html" role="tab"
+          aria-controls="pills-register" aria-selected="false" style="color:blueviolet">Register</a>
+      </li>
+    </ul>
+
+
+    <!-- Email input -->
+    <form>
+      <div class="form-group">
+        <input type="email" id="loginName" class="form-control" />
+        <label class="form-label" for="loginName">Email</label>
+      </div>
+    </form>
+    <!-- Password input -->
+    <form>
+      <div class="form-group">
+        <input type="password" id="loginPassword" placeholder="Password" class="form-control" />
+        <label class="form-label" for="loginPassword">Password</label>
+      </div>
+    </form>
+
+    <!-- Submit button -->
+    <button class="btn btn-primary btn-block mb-4" type="submit" id="submitBtn" style="background-color:blueviolet">Sign in</button>
+
+    <!-- Register buttons -->
+    <div class="text-center">
+      <p>Not a member? <a href="register.html" style="color:blueviolet">Register</a></p>
+    </div>
+  </div>
+  </div>
+
+
+
+
+  <script type="module">
+
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js'
+
+    // If you enabled Analytics in your project, add the Firebase SDK for Google Analytics
+    import { getAnalytics } from 'https://www.gstatic.com/firebasejs/9.17.1/firebase-analytics.js'
+
+    // Add Firebase products that you want to use
+    import { getAuth, signInWithEmailAndPassword, onAuthStateChanged} from 'https://www.gstatic.com/firebasejs/9.17.1/firebase-auth.js'
+    import { getFirestore } from 'https://www.gstatic.com/firebasejs/9.17.1/firebase-firestore.js'
+    const firebaseConfig = {
+      apiKey: "AIzaSyBq4ITcP7uAR-mXHxt_U-LtOhS5DrPdhUo",
+      authDomain: "internal-assesment-e46ee.firebaseapp.com",
+      databaseURL: "https://internal-assesment-e46ee-default-rtdb.europe-west1.firebasedatabase.app",
+      projectId: "internal-assesment-e46ee",
+      storageBucket: "internal-assesment-e46ee.appspot.com",
+      messagingSenderId: "966002846365",
+      appId: "1:966002846365:web:b8724b306e434a4a48c274",
+      measurementId: "G-GSF9NVBJN7"
+    };
+
+    const app = initializeApp(firebaseConfig);
+
+    const auth = getAuth();
+
+
+    
+    document.getElementById("submitBtn").addEventListener("click", function (event) {
+      event.preventDefault();
+      $('#_modal').modal('show');
+      
+      const email = document.getElementById("loginName").value;
+      const password = document.getElementById("loginPassword").value;
+      const errorHead = document.querySelector('#errorHeader');
+  
+      signInWithEmailAndPassword(auth,email, password)
+        .then((userCredential) => {
+          window.location.href = "index.html";
+          const user = userCredential.user
+        })
+        .catch(function (error) {
+          console.log("Error signing in:", error);
+          const passwordInput = document.getElementById("loginPassword");
+          const emailInput = document.getElementById("loginName");
+          passwordInput.style.borderColor = "red";
+          emailInput.style.borderColor = "red";
+
+          if (error.code === "auth/wrong-password") {
+            passwordInput.placeholder = "error: incorrect password";
+            errorHead.textContent = "error: incorrect password";
+
+          } else if (error.code === "auth/user-not-found") {
+            passwordInput.placeholder = "error: user not found";
+            errorHead.textContent = "error: user not found";
+          } else if (error.code === "auth/invalid-email") {
+            passwordInput.placeholder = "error: invalid email";
+            errorHead.textContent = "error: invalid email";
+          } else {
+            passwordInput.placeholder = "error: You are not logged in. Please register.";
+            errorHead.textContent = "error: You are not logged in. Please register.";
+          }
+        });
+    });
+
+  </script>
+
+
+
+</body>
+
+</html>
